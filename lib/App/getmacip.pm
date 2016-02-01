@@ -1,5 +1,6 @@
+package App::getmacip;
+
 use strict;
 use warnings;
-package App::getmacip;
 
 1;
