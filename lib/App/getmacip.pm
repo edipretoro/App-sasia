@@ -6,4 +6,7 @@ use warnings;
 use Moo;
 use MooX::Options;
 
+sub run {
+}
+
 1;
