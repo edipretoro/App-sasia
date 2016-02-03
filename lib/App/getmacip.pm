@@ -10,6 +10,9 @@ use MooX::Options;
 use Nmap::Scanner;
 use YAML qw(LoadFile DumpFile Dump);
 use Template;
+
+our %machines;
+
 has machines => (
   is => 'rw',
   isa => sub { die "$_[0] is not an hashref" unless ref($_[0]) eq 'HASH' },
