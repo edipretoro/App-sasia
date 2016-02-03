@@ -82,6 +82,15 @@ sub _filter {
   $self->machines( $machines );
 }
 
+sub _display {
+  my ( $self ) = @_;
+
+  if ($self->template_filename) {
+  } else {
+    print Dump( $self->machines );
+  }
+}
+
 sub _scanning {
   my ( $self, $host ) = @_;
 
