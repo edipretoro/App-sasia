@@ -53,6 +53,10 @@ sub run {
   $self->_display();
 }
 
+sub _is_root {
+  die "$0: You probably need to be root to get the informations needed.\n" unless $> == 0;
+}
+
 }
 
 1;
