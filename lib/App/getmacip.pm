@@ -57,6 +57,29 @@ sub _is_root {
   die "$0: You probably need to be root to get the informations needed.\n" unless $> == 0;
 }
 
+sub _scan {
+  my ( $self ) = @_;
+
+  my $scanner = Nmap::Scanner->new();
+  $scanner->register_scan_started_event( \&_scanning );
+  $scanner->scan( ' -sn ' . $self->ip_range() );
+}
+
+sub _scanning {
+  my ( $self, $host ) = @_;
+
+  my @addresses = $host->addresses();
+  my $macaddr;
+  my $ipaddr;
+
+  foreach my $address ( @addresses ) {
+    if ($address->addrtype() eq 'mac') {
+      $macaddr = $address->addr();
+    } elsif ($address->addrtype eq 'ipv4') {
+      $ipaddr = $address->addr();
+    }
+  }
+  $machines{fc $macaddr} = $ipaddr if defined( $macaddr );
 }
 
 1;
