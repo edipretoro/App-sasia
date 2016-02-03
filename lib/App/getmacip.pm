@@ -45,6 +45,14 @@ option template_filename => (
 );
 
 sub run {
+  my ( $self ) = @_;
+
+  $self->_is_root();
+  $self->_scan();
+  $self->_filter();
+  $self->_display();
+}
+
 }
 
 1;
