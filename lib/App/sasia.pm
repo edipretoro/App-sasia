@@ -67,12 +67,15 @@ sub _scan {
 
 sub _filter {
   my ( $self ) = @_;
-  my $machines = $self->machines();
-  die "Couldn't find the filter filename: ", $self->filter_filename, "\n" unless -e $self->filter_filename;
-  my $filter = LoadFile( $self->filter_filename() );
 
-  foreach my $mac (keys %{$filter}) {
-    $machines->{fc $mac} = $filter->{$mac}
+  my $machines = $self->machines();
+
+  if ($self->filter_filename) {
+    die "Couldn't find the filter filename: ", $self->filter_filename, "\n" unless -e $self->filter_filename;
+    my $filter = LoadFile( $self->filter_filename() );
+    foreach my $mac (keys %{$filter}) {
+      $machines->{fc $mac} = $filter->{$mac}
+    }
   }
 
   foreach my $mac (keys %machines) {
