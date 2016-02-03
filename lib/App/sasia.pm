@@ -29,7 +29,7 @@ option ip_range => (
 );
 
 option filter_filename => (
-  is => 'ro', 
+  is => 'ro',
   format => 's',
   required => 0,
   short => 'f|filter',
