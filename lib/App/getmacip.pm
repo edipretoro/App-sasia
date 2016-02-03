@@ -65,6 +65,23 @@ sub _scan {
   $scanner->scan( ' -sn ' . $self->ip_range() );
 }
 
+sub _filter {
+  my ( $self ) = @_;
+  my $machines = $self->machines();
+  die "Couldn't find the filter filename: ", $self->filter_filename, "\n" unless -e $self->filter_filename;
+  my $filter = LoadFile( $self->filter_filename() );
+
+  foreach my $mac (keys %{$filter}) {
+    $machines->{fc $mac} = $filter->{$mac}
+  }
+
+  foreach my $mac (keys %machines) {
+    $machines->{fc $mac}{ipv4} = $machines{$mac};
+  }
+
+  $self->machines( $machines );
+}
+
 sub _scanning {
   my ( $self, $host ) = @_;
 
