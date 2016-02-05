@@ -74,12 +74,11 @@ sub _filter {
     die "Couldn't find the filter filename: ", $self->filter_filename, "\n" unless -e $self->filter_filename;
     my $filter = LoadFile( $self->filter_filename() );
     foreach my $mac (keys %{$filter}) {
-      $machines->{fc $mac} = $filter->{$mac}
+      $machines->{fc $mac} = $filter->{$mac};
+      $machines->{fc $mac}{ipv4} = $machines{fc $mac};
     }
-  }
-
-  foreach my $mac (keys %machines) {
-    $machines->{fc $mac}{ipv4} = $machines{$mac};
+  } else {
+    $machines = \%machines;
   }
 
   $self->machines( $machines );
