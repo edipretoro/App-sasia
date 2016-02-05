@@ -88,6 +88,12 @@ sub _display {
   my ( $self ) = @_;
 
   if ($self->template_filename) {
+    die "Couldn't find the template filename: ", $self->template_filename, "\n" unless -e $self->template_filename;
+    my $tt = Template->new({
+      ABSOLUTE => 1,
+      RELATIVE => 1,
+    });
+    $tt->process( $self->template_filename, { machines => $self->machines }, \*STDOUT ) || die $tt->errors();
   } else {
     print Dump( $self->machines );
   }
